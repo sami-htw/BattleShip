@@ -6,11 +6,12 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
-        {
-            BattleShipTesting.BoardTests.class,
-            BattleShipTesting.LocalBoardTests.class,
-            BattleShipTesting.ViewTests.class
-        }
+    {
+        BoardTests.class,
+        LocalBoardTests.class,
+        ViewTests.class
+    }
 )
 public class AllTests {
+
 }
