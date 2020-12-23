@@ -9,7 +9,8 @@ import org.junit.runners.Suite;
     {
         BoardTests.class,
         LocalBoardTests.class,
-        ViewTests.class
+        ViewTests.class,
+        InputTests.class,
     }
 )
 public class AllTests {

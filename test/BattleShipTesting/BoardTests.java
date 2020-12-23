@@ -1,19 +1,23 @@
 package BattleShipTesting;
 
-import SeaWar.board.Board;
-import SeaWar.board.BoardException;
-import SeaWar.board.Coordinates;
-import SeaWar.board.FieldStatus;
-import SeaWar.board.LocalBoard;
-import SeaWar.board.LocalBoardImpl;
-import SeaWar.board.RemoteBoard;
-import SeaWar.board.RemoteBoardImpl;
-import SeaWar.board.Ship;
-import SeaWar.board.ShipStatus;
-import SeaWar.board.ShotResults;
+import seaWar.GameFactory;
+import seaWar.GameImpl;
+import seaWar.GameStatus;
+import seaWar.board.Board;
+import seaWar.board.BoardException;
+import seaWar.board.Coordinates;
+import seaWar.board.FieldStatus;
+import seaWar.board.LocalBoard;
+import seaWar.board.LocalBoardImpl;
+import seaWar.board.RemoteBoard;
+import seaWar.board.RemoteBoardImpl;
+import seaWar.board.Ship;
+import seaWar.board.ShipStatus;
+import seaWar.board.Shot;
+import seaWar.board.ShotResults;
 import org.junit.Assert;
 import org.junit.Test;
-import SeaWar.SeaWarException;
+import seaWar.SeaWarException;
 
 
 public class BoardTests {
@@ -21,47 +25,67 @@ public class BoardTests {
   public BoardTests() {
   }
 
+
   final LocalBoard getLocalBoard() {
-//        return new LocalBoardMock();
-    return new LocalBoardImpl();
+    return new LocalBoardImpl(GameImpl.createGame());
+  }
+
+  final Shot getLocalBoardShot(GameStatus status) {
+    return new LocalBoardImpl(GameFactory.getGameInStatus(status));
   }
 
   final RemoteBoard getRemoteBoard() {
-    return new RemoteBoardImpl();
+    return new RemoteBoardImpl(GameImpl.createGame());
 //        return new RemoteBoardMock();
   }
 
-  /////////////////////////////////////////////////////////////////
-  //     "good" test for both board can be done like this        //
-  /////////////////////////////////////////////////////////////////
+  final Shot getRemoteBoardShot(GameStatus status) {
+    return new RemoteBoardImpl(GameFactory.getGameInStatus(status));
+  }
+
+  /**
+   * @param shot
+   * @return
+   */
+  final Board getBoard(Shot shot) {
+    return (Board) shot;
+  }
+
+
+
+
+  /*
+   * good Test for both board
+   */
+
   @Test
   public void niceShotToBoardTest() throws SeaWarException {
     // local test
-    this.niceShotToBoard(this.getLocalBoard());
+    this.niceShotToBoard(this.getLocalBoardShot(GameStatus.PLAY_PASSIVE));
     // remote test
-    this.niceShotToBoard(this.getRemoteBoard());
+    this.niceShotToBoard(this.getRemoteBoardShot(GameStatus.PLAY_ACTIVE));
   }
 
   @Test
   public void edgeBoardShotTest() throws SeaWarException {
     // local test
-    this.edgeBoardShot1(this.getLocalBoard());
-    this.edgeBoardShot2(this.getLocalBoard());
-    this.edgeBoardShot3(this.getLocalBoard());
-    this.edgeBoardShot4(this.getLocalBoard());
+    this.edgeBoardShot1(this.getLocalBoardShot(GameStatus.PLAY_PASSIVE));
+    this.edgeBoardShot2(this.getLocalBoardShot(GameStatus.PLAY_PASSIVE));
+    this.edgeBoardShot3(this.getLocalBoardShot(GameStatus.PLAY_PASSIVE));
+    this.edgeBoardShot4(this.getLocalBoardShot(GameStatus.PLAY_PASSIVE));
     // remote test
-    this.edgeBoardShot1(this.getRemoteBoard());
-    this.edgeBoardShot2(this.getRemoteBoard());
-    this.edgeBoardShot3(this.getRemoteBoard());
-    this.edgeBoardShot4(this.getRemoteBoard());
+    this.edgeBoardShot1(this.getRemoteBoardShot(GameStatus.PLAY_ACTIVE));
+    this.edgeBoardShot2(this.getRemoteBoardShot(GameStatus.PLAY_ACTIVE));
+    this.edgeBoardShot3(this.getRemoteBoardShot(GameStatus.PLAY_ACTIVE));
+    this.edgeBoardShot4(this.getRemoteBoardShot(GameStatus.PLAY_ACTIVE));
   }
 
   @Test
   public void fieldStatusTest() throws SeaWarException {
     // local test
-    this.fieldStatus(this.getLocalBoard());
+    this.fieldStatus(this.getLocalBoardShot(GameStatus.PLAY_PASSIVE));
     // remote test
-    this.fieldStatus(this.getRemoteBoard());
+    this.fieldStatus(this.getRemoteBoardShot(GameStatus.PLAY_ACTIVE));
   }
 
   @Test
@@ -77,48 +101,49 @@ public class BoardTests {
   /**
    * shot inside board
    */
-  public void niceShotToBoard(Board board) throws SeaWarException {
+  public void niceShotToBoard(Shot board) throws SeaWarException {
     board.shot(4, 3);
     // must not produce an exception
   }
 
   /**
-   * shot to edges
+   * shot at edges
    */
-  public void edgeBoardShot1(Board board) throws SeaWarException {
+  public void edgeBoardShot1(Shot board) throws SeaWarException {
     board.shot(Board.MIN_COLUMN_INDEX, Board.MIN_ROW_INDEX);
     // must not produce an exception
   }
 
   /**
-   * shot to edges
+   * shot at edges
    */
-  public void edgeBoardShot2(Board board) throws SeaWarException {
+  public void edgeBoardShot2(Shot board) throws SeaWarException {
     board.shot(Board.MAX_COLUMN_INDEX, Board.MIN_ROW_INDEX);
     // must not produce an exception
   }
 
   /**
-   * shot to edges
+   * shot at edges
    */
-  public void edgeBoardShot3(Board board) throws SeaWarException {
+  public void edgeBoardShot3(Shot board) throws SeaWarException {
     board.shot(Board.MIN_COLUMN_INDEX, Board.MAX_ROW_INDEX);
     // must not produce an exception
   }
 
   /**
-   * shot to edges
+   * shot at edges
    */
-  public void edgeBoardShot4(Board board) throws SeaWarException {
+  public void edgeBoardShot4(Shot board) throws SeaWarException {
     board.shot(Board.MAX_COLUMN_INDEX, Board.MAX_ROW_INDEX);
     // must not produce an exception
   }
 
   /**
-   * a shot make a field water or hit
+   * shooting on the field making a field  water or hit
    */
-  public void fieldStatus(Board board) throws SeaWarException {
-    board.shot(0, 0);
+  public void fieldStatus(Shot shot) throws SeaWarException {
+    shot.shot(0, 0);
+    Board board = this.getBoard(shot);
     FieldStatus fieldStatus = board.getFieldStatus(0, 0);
 
     Assert.assertTrue(fieldStatus == FieldStatus.WATER
@@ -141,37 +166,31 @@ public class BoardTests {
   }
   ///////// END: double good tests
 
-  //////////////////////////////////////////////////////////////////////
-  //                        structural tests:
-  //                       shot outside board                        //
-  //                       expect an exception                        //
-  //////////////////////////////////////////////////////////////////////
 
+  // Structural Tests : when shooting outside the Board ,BoardException is produced
   ///////////////// Local Board
   @Test(expected = BoardException.class)
   public void shotOutsideBoard1() throws SeaWarException {
-    Board localBoard = this.getLocalBoard();
+    Shot localBoard = this.getLocalBoardShot(GameStatus.PLAY_PASSIVE);
     localBoard.shot(-1, -1);
     // must not produce an exception
   }
 
   @Test(expected = BoardException.class)
   public void shotOutsideBoard2() throws SeaWarException {
-    Board localBoard = this.getLocalBoard();
+    Shot localBoard = this.getLocalBoardShot(GameStatus.PLAY_PASSIVE);
     localBoard.shot(0, 10);
     // must not produce an exception
   }
 
-  //////////////////////////////////////////////////////////////////////
-  //                        scenario tests                            //
-  //////////////////////////////////////////////////////////////////////
+  //Other Tests scenarios
 
   /**
    * One cannot hit same field twice
    */
   @Test
   public void twoShotsAreWaterLocal() throws SeaWarException {
-    Board board = this.getLocalBoard();
+    Shot board = this.getLocalBoardShot(GameStatus.PLAY_PASSIVE);
     // shot at 0,0
     board.shot(0, 0);
     ShotResults shotResult = board.shot(0, 0);
@@ -182,7 +201,7 @@ public class BoardTests {
 
   @Test
   public void twoShotsAreWaterRemote() throws SeaWarException {
-    Board board = this.getRemoteBoard();
+    Shot board = this.getRemoteBoardShot(GameStatus.PLAY_ACTIVE);
     // shot at 0,0
     board.shot(0, 0);
     ShotResults shotResult = board.shot(0, 0);
@@ -205,9 +224,9 @@ public class BoardTests {
     }
   }
 
-  //////////////////////////////////////////////////////////////////
-  //                     local board scenarios                    //
-  //////////////////////////////////////////////////////////////////
+  /*
+   * Local Board Scenarios
+   */
 
   /**
    * a brand new ship is ok
@@ -358,4 +377,6 @@ public class BoardTests {
     // start lower right corner but only tw fields - ok
     board.putShip(ship, 8, 8, true);
   }
+
+
 }

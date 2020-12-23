@@ -1,7 +1,7 @@
 package view.console;
 
 import java.io.PrintStream;
-import SeaWar.board.*;
+import seaWar.board.*;
 
 
 /**
@@ -23,9 +23,14 @@ public class BoardViewConsoleImpl implements BoardViewConsole {
     // assumed [column,row] - iterate rows and columns inside
 
     screen.print("\n");
-    for (int row = Board.MIN_ROW_INDEX; row < Board.MAX_ROW_INDEX; row++) {
+    screen.print("  ");
+    screen.print("A B C D E F G H I J");
+    screen.print("\n");
+
+    for (int row = Board.MIN_ROW_INDEX; row <= Board.MAX_ROW_INDEX; row++) {
+      screen.print(row + " ");
       for (int column = Board.MIN_COLUMN_INDEX;
-          column < Board.MAX_COLUMN_INDEX; column++) {
+          column <= Board.MAX_COLUMN_INDEX; column++) {
 
         switch (fieldStatus[column][row]) {
           case SHIP:
