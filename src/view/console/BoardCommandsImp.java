@@ -261,7 +261,7 @@ public class BoardCommandsImp implements BoardCommands {
   /**
    * expected parameters: length column row orientation
    *
-   * @param cmdLineString
+   * @param parameterString
    */
   private void doSetShip(String parameterString) {
     StringTokenizer st = new StringTokenizer(parameterString);
@@ -328,7 +328,7 @@ public class BoardCommandsImp implements BoardCommands {
   }
 
   private void doTalk(String parameterString) {
-    this.consoleOutput.println("will be implemented later .. allows talking to your opponent");
+    this.consoleOutput.println("will be later implemented ... ,then you can talk to your opponent");
   }
 
   private void doPrintLocalBoard() {

@@ -5,7 +5,7 @@ import seaWar.board.*;
 
 
 /**
- * This class implements a visualization of sea war games. Visualization is a number of simple ASCII
+ * This class implements a visualization of sea-war game. Visualization is a number of simple ASCII
  * characters written to a PrintStream.
  */
 public class BoardViewConsoleImpl implements BoardViewConsole {

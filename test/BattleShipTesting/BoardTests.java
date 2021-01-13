@@ -164,7 +164,7 @@ public class BoardTests {
       }
     }
   }
-  ///////// END: double good tests
+  /* END: double good tests */
 
 
   // Structural Tests : when shooting outside the Board ,BoardException is produced

@@ -7,7 +7,7 @@ import seaWar.board.RemoteBoard;
 import seaWar.board.ShotResults;
 
 /**
- * this interface is a facade for the sea war game.
+ * this interface is a facade for the sea-war game.
  *
  */
 public interface Game {

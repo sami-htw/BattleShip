@@ -98,7 +98,7 @@ public class LocalBoardImpl extends BoardImpl implements LocalBoard {
 
   /**
    * Keeps all field in sync with ship movement.
-   * @param coordinates on which something happens
+   * @param ship on which something happens
    * @param put true: ship is placed on those coordinates. false removed
    * @throws GameStatusException
    * @throws BoardException
@@ -187,25 +187,7 @@ public class LocalBoardImpl extends BoardImpl implements LocalBoard {
     }
 
 
-        /* v vessel, (V first coordinate, v next ones)
-        // S stern (Heck), B bow (Bug),
-        // s starboard (Steuerbord), p portside (Backbord)
-        example : ship length = 3
-        horizontal = true
 
-         sss
-        BVvvS
-         ppp
-
-        horizontal = false = vertical
-         B
-        pVs
-        pvs
-        pvs
-         S
-
-        There must no other vessel within S, s, B and p
-        */
     // bow (B) Bug
     int columnBow = horizontal ? column - 1 : column;
     int rowBow = horizontal ? row : row - 1;
@@ -268,7 +250,8 @@ public class LocalBoardImpl extends BoardImpl implements LocalBoard {
   /**
    * Add coordinate to list. Add also all following number fields.
    * @param list
-   * @param coo
+   * @param column
+   * @param row
    * @param number
    * @param horizontal
    */

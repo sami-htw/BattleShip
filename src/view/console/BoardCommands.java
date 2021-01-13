@@ -11,7 +11,7 @@ public interface BoardCommands {
   String REMOVE_SHIP = "r";
 
   String START_GAME = "start";
-  String GIVE_UP = "give up";
+  String GIVE_UP = "giveup";
   String TALK = "talk";
   String GET_STATUS = "status";
   String EXIT = "exit";

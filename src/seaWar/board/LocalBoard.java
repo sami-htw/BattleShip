@@ -11,8 +11,8 @@ public interface LocalBoard extends Board {
   }
 
   /**
-   * Return a ship that is not yet set on the board. According to the (German) wikipedia description
-   * there are: 1 ship length 5 2 ship length 4 3 ship length 3 4 ship length 2
+   * Return a ship that is not set yet on the board. According to the (German) wikipedia description
+   * there are: 1-ship length 5 ,2-ship length 4, 3-ship length 3, 4-ship length 2
    *
    * @param length of the ship
    * @return
@@ -41,7 +41,7 @@ public interface LocalBoard extends Board {
   /**
    * Take ship from bord - nothing happens if ship not on the board
    *
-   * @param ship ship to take away
+   * @param ship to take ship away
    * @throws GameStatusException will be thrown if status is not PREPARE
    */
   void removeShip(Ship ship) throws GameStatusException;
@@ -52,7 +52,7 @@ public interface LocalBoard extends Board {
    * @param ship       ship to place
    * @param column     index of first coordinate
    * @param row        index of first coordinate
-   * @param horizontal true if ship is to be place horizontal / false vertical
+   * @param horizontal true if ship is to be place horizontal / false if vertical
    * @throws BoardException      if coordinates outside the board
    * @throws GameStatusException wrong game stats
    */

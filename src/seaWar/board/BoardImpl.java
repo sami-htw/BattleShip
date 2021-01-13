@@ -43,7 +43,7 @@ class BoardImpl implements Board, BoardViewAccess, Shot {
    *
    * @param column
    * @param row
-   * @throws seawar.board.BoardException if coordinates not inside the board
+   * @throws BoardException if coordinates not inside the board
    */
   protected void check4BoardException(int column, int row)
       throws BoardException {

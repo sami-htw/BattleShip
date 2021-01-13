@@ -63,7 +63,7 @@ public class InputTests {
 
   @Test
   public void basicVisualTests2() throws IOException {
-    // expected: printboard
+    // expected: print board
     StringBuilder b = new StringBuilder();
     b.append(BoardCommands.PRINT_LOCAL);
     b.append("\n");
@@ -78,7 +78,7 @@ public class InputTests {
 
   @Test
   public void inputTestsDebug() throws IOException {
-    // expected: printboard
+    // expected: print board
     StringBuilder b = new StringBuilder();
     b.append(BoardCommands.REMOVE_SHIP);
     b.append(" B 4"); // failure
@@ -91,7 +91,7 @@ public class InputTests {
 
   @Test
   public void inputTestsDebug2() throws IOException {
-    // expected: printboard
+    // expected: print board
     StringBuilder b = new StringBuilder();
     b.append(BoardCommands.GET_STATUS);
     b.append("\n");
